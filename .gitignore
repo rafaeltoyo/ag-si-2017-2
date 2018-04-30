@@ -1,0 +1,8 @@
+# IntelliJ idea files
+.idea/
+
+# IntelliJ project
+*.iml
+
+# IntelliJ output
+out/
