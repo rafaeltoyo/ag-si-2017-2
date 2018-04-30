@@ -2,6 +2,7 @@ package problem.knapsack.instance1;
 
 import algorithm.genetic.GaPopulation;
 import algorithm.genetic.GeneticAlgorithm;
+import controller.GaController;
 import problem.knapsack.Bag;
 import problem.knapsack.BagItem;
 
@@ -61,6 +62,8 @@ public class MainInstance1
         bag.addItem(new BagItem(25, 40));
         bag.addItem(new BagItem(12, 17));
         bag.addItem(new BagItem(19, 39));
+
+        GaController.printBag(bag);
 
         GaPopulation pop = new GaPopulation();
         pop.getElements().add(bag.clone());

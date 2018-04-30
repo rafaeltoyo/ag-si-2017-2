@@ -20,21 +20,22 @@ public class GaController
     {
         int id = 0;
 
-        System.out.print("--------------------------------------------------");
-        System.out.print("Item list: ");
+        System.out.println("------------------------------------------------------------");
+        System.out.println("| Item list:                                               |");
+        System.out.println("------------------------------------------------------------");
 
         for (BagItem item : bag.getItems()) {
-            System.out.print("| id: ");
+            System.out.print("| id:  ");
             System.out.print(++id);
             System.out.print("\t | value: ");
             System.out.print(item.getValue());
             System.out.print("\t | weight: ");
             System.out.print(item.getWeight());
             System.out.print("\t | picked? ");
-            System.out.print(item.isActive() ? "Yes |" : " No |");
+            System.out.println(item.isActive() ? "Yes |" : " No |");
         }
 
-        System.out.print("--------------------------------------------------");
+        System.out.println("------------------------------------------------------------");
 
 
     }
