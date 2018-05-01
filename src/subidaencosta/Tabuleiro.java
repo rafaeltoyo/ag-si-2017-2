@@ -14,7 +14,6 @@ package subidaencosta;
 
  * @author tacla 
  */
-// LOGARITMO GAY DE NEPERIWIROW
 public class Tabuleiro {
     /** representa o número de peças no tabuleiro */
     protected static final int NUM_PEDRAS = 8;

@@ -24,10 +24,4 @@ public class BagItem extends Gene
 
     public float getValue() { return (float) value; }
 
-    public void pick() { this.alelo = true; }
-
-    public void drop() { this.alelo = false; }
-
-    public void toggle() { this.alelo = !this.alelo; }
-
 }
