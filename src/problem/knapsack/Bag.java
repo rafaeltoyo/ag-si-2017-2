@@ -2,12 +2,8 @@ package problem.knapsack;
 
 import algorithm.genetic.Chromosome;
 import algorithm.genetic.Gene;
-import service.fitnessComparator;
 import service.valueComparator;
-import service.weightComparator;
 
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -71,7 +67,7 @@ public class Bag extends Chromosome
 
     @Override
     public void print() {
-        System.out.print(this.fitness + " - |");
+        System.out.print(this.fitness + ", " + this.weight + " - |");
         for (Gene gene : this.genes) {
             System.out.print(gene.isActive() ? "1|" : "0|");
         }

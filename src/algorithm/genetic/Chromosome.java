@@ -3,7 +3,6 @@ package algorithm.genetic;
 import algorithm.base.Particle;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Classe que representa um cromossomo (conjunto de genes) do AG
