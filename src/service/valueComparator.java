@@ -8,6 +8,13 @@ public class valueComparator implements Comparator<BagItem>
 {
     @Override
     public int compare(BagItem o1, BagItem o2) {
-        return (int) (o1.getValue() - o2.getValue());
+        if (o1.getValue() > o2.getValue()) {
+            return 1;
+        } else {
+            if (o1.getValue() == o2.getValue()) {
+                return 0;
+            }
+            return -1;
+        }
     }
 }

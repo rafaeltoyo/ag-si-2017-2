@@ -8,6 +8,13 @@ public class weightComparator implements Comparator<BagItem>
 {
     @Override
     public int compare(BagItem o1, BagItem o2) {
-        return (o1.getWeight() - o2.getWeight());
+        if (o1.getWeight() > o2.getWeight()) {
+            return 1;
+        } else {
+            if (o1.getWeight() == o2.getWeight()) {
+                return 0;
+            }
+            return -1;
+        }
     }
 }
