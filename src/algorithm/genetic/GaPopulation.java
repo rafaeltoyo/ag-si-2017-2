@@ -1,11 +1,11 @@
 package algorithm.genetic;
 
 import algorithm.base.Population;
+import controller.GaController;
 import service.fitnessComparator;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class GaPopulation extends Population<Chromosome>
 {
@@ -27,20 +27,51 @@ public class GaPopulation extends Population<Chromosome>
     /**
      * Atualização forçada dos fitness dos cromossos
      */
-    public void eval()
+    public float eval()
     {
+        float total = 0;
         for (Chromosome chromosome : this.elements) {
-            chromosome.calcFitness();
+            total += chromosome.calcFitness();
         }
+        return total;
     }
 
     /**
-     * todo Gerar uma copia de N elementos a partir dos elementos atuais utilizando o método da roleta simples
-     *
-     * Provisório: pega os N melhores
+     * Gerar uma copia de N elementos a partir dos elementos atuais utilizando o método da roleta simples
      *
      */
     public GaPopulation children(int N) throws CloneNotSupportedException {
+        // Soma total de todos fitness
+        double total = this.eval();
+
+        // Ordenar (?)
+        Collections.sort(this.elements, Collections.reverseOrder(new fitnessComparator()));
+
+        // Criar a população de filhos
+        GaPopulation children = new GaPopulation();
+
+        // Criar N elementos filhos
+        for (int i = 0; i < Math.min(children.elements.size(), N); i++) {
+
+            // Sorteio no formato da roleta
+            double rouletteTarget = GaController.getInstance().getRnd().nextDouble();
+            double rouletteCurrent = 0;
+
+            // Percorrer os elementos para encontrar o sorteado
+            for (Chromosome chromosome : this.elements) {
+                rouletteCurrent += chromosome.fitness();
+
+                if (rouletteCurrent > rouletteTarget) {
+                    children.getElements().add(chromosome.clone());
+                    break;
+                }
+            }
+        }
+        children.eval();
+        Collections.sort(children.elements, Collections.reverseOrder(new fitnessComparator()));
+        return children;
+
+        /* OLD -> Provisório: pega os N melhores
         this.eval();
         Collections.sort(this.elements, Collections.reverseOrder(new fitnessComparator()));
 
@@ -48,6 +79,7 @@ public class GaPopulation extends Population<Chromosome>
         children.elements = new ArrayList<>(children.elements.subList(0, Math.min(children.elements.size(), N)));
 
         return children;
+        */
     }
 
     /**

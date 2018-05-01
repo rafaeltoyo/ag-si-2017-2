@@ -6,6 +6,7 @@ import service.fitnessComparator;
 import service.valueComparator;
 import service.weightComparator;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.PriorityQueue;
@@ -19,6 +20,12 @@ public class Bag extends Chromosome
 
     public Bag(int capacity) {
         this.capacity = capacity;
+    }
+
+    public Bag rndClone() throws CloneNotSupportedException {
+        Bag clone = (Bag) super.rndClone();
+        clone.fixBag();
+        return clone;
     }
 
     public void addItem(BagItem bagItem)
@@ -73,6 +80,7 @@ public class Bag extends Chromosome
     public void fixBag() {
         // Calcular o peso da mochila
         float weight = calcWeight();
+
         // Se ultrapassar o limite ...
         if (weight > this.capacity) {
             // Ordenar por valor os itens (crescente)
