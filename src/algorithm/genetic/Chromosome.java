@@ -12,15 +12,31 @@ import java.util.List;
 abstract public class Chromosome implements Particle, Cloneable, Comparable<Chromosome>
 {
 
-    protected final List<Gene> genes = new ArrayList<>();
+    protected ArrayList<Gene> genes = new ArrayList<>();
 
     private float fitness;
 
-    public Chromosome clone() throws CloneNotSupportedException { return (Chromosome) super.clone(); }
+    public Chromosome clone() throws CloneNotSupportedException {
+        Chromosome clone = (Chromosome) super.clone();
+        clone.genes = new ArrayList<>();
+        for (Gene gene : this.genes) {
+            clone.genes.add(gene.clone());
+        }
+        return clone;
+    }
+
+    public Chromosome rndClone() throws CloneNotSupportedException {
+        Chromosome clone = (Chromosome) super.clone();
+        clone.genes = new ArrayList<>();
+        for (Gene gene : this.genes) {
+            clone.genes.add(gene.rndClone());
+        }
+        return clone;
+    }
 
     protected void addGene(Gene gene) { this.genes.add(gene); }
 
-    public List<Gene> getGenes() { return genes; }
+    public ArrayList<Gene> getGenes() { return genes; }
 
     public float calcFitness() {
         this.fitness = 0;
@@ -43,5 +59,13 @@ abstract public class Chromosome implements Particle, Cloneable, Comparable<Chro
     @Override
     public int compareTo(Chromosome o) {
         return (int) (this.fitness() - o.fitness());
+    }
+
+    @Override
+    public void print() {
+        System.out.print(this.fitness + " - |");
+        for (Gene gene : this.genes) {
+            System.out.print(gene.isActive() ? "1|" : "0|");
+        }
     }
 }

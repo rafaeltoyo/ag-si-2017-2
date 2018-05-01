@@ -1,5 +1,7 @@
 package algorithm.genetic;
 
+import controller.GaController;
+
 /**
  * Classe que representa um Gene do AG
  *
@@ -13,7 +15,15 @@ abstract public class Gene implements Cloneable
         this.alelo = false;
     }
 
-    public Gene clone() throws CloneNotSupportedException { return (Gene) super.clone(); }
+    public Gene clone() throws CloneNotSupportedException {
+        return (Gene) super.clone();
+    }
+
+    public Gene rndClone() throws CloneNotSupportedException {
+        Gene clone = (Gene) super.clone();
+        clone.alelo = GaController.getInstance().getRnd().nextFloat() > 0.5;
+        return clone;
+    }
 
     public boolean isActive() { return alelo; }
 

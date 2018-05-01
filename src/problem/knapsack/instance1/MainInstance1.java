@@ -66,17 +66,17 @@ public class MainInstance1
         GaController.printBag(bag);
 
         GaPopulation pop = new GaPopulation();
-        pop.getElements().add(bag.clone());
-        pop.getElements().add(bag.clone());
-        pop.getElements().add(bag.clone());
-        pop.getElements().add(bag.clone());
-        pop.getElements().add(bag.clone());
-        pop.getElements().add(bag.clone());
-        pop.getElements().add(bag.clone());
-        pop.getElements().add(bag.clone());
+        for (int i = 0; i < 30; i++) {
+            pop.getElements().add(bag.rndClone());
+        }
+
+        System.out.println("Initial Population:");
+        pop.eval();
+        pop.print();
+        System.out.println("");
 
         GeneticAlgorithm algo = new GeneticAlgorithm(pop);
-        algo.setMaxGen(1000);
+        algo.setMaxGen(100);
         algo.run();
     }
 

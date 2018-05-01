@@ -17,7 +17,7 @@ public class Crossover implements Operator
     @Override
     public void exec() {
 
-        for (int i = 0; i < this.population.getElements().size(); i+=2) {
+        for (int i = 0; i < this.population.getElements().size() - 1; i+=2) {
 
             Chromosome father = this.population.getElements().get(i);
             Chromosome mother = this.population.getElements().get(i + 1);

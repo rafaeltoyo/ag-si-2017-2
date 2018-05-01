@@ -20,38 +20,39 @@ public class GeneticAlgorithm
 
     public Chromosome run() throws CloneNotSupportedException
     {
-        // Inicializa População
-        GaPopulation population = this.population.clone();
-
-        Crossover crossover = new Crossover(population);
+        // População 'D'
+        GaPopulation children;
 
         // Calcula Fitness
-        population.evaluation();
+        this.population.eval();
 
         do {
 
             // Seleciona para reprodução
-            population.prepareToEvolve();
+            children = this.population.children(this.population.getElements().size() / 2);
 
             // Reprodução: Cruzamento (crossover simples) e mutação uniforme
-            crossover.exec();
+            (new Crossover(children)).exec();
 
             // Calcula Fitness
-            population.evaluation();
+            children.eval();
 
             // Nova População = melhores entre pais e filhos
-            population.evolve();
+            this.population.evolve(children);
 
             // Incrementa Geração
             this.generation++;
 
+            // PRINT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             System.out.println("Generation: " + this.generation);
+            this.population.print();
+            System.out.println("");
 
             // Atingiu condição de Parada?
         } while (!this.stop());
 
         // Retorna melhor cromossomo
-        return population.getBest();
+        return this.population.getBest().clone();
     }
 
     /**
