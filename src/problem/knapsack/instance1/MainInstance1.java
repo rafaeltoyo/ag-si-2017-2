@@ -77,7 +77,7 @@ public class MainInstance1
         System.out.println("");
 
         GeneticAlgorithm algo = new GeneticAlgorithm(pop);
-        algo.setMaxGen(50);
+        algo.setMaxGen(500);
         algo.run();
     }
 
