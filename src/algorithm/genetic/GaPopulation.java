@@ -51,7 +51,8 @@ public class GaPopulation extends Population<Chromosome>
         GaPopulation children = new GaPopulation();
 
         // Criar N elementos filhos
-        for (int i = 0; i < Math.min(children.elements.size(), N); i++) {
+        N = Math.min(this.elements.size(), N);
+        for (int i = 0; i < N; i++) {
 
             // Sorteio no formato da roleta
             double rouletteTarget = GaController.getInstance().getRnd().nextDouble();
@@ -59,27 +60,14 @@ public class GaPopulation extends Population<Chromosome>
 
             // Percorrer os elementos para encontrar o sorteado
             for (Chromosome chromosome : this.elements) {
-                rouletteCurrent += chromosome.fitness();
-
+                rouletteCurrent += (chromosome.fitness() / total);
                 if (rouletteCurrent > rouletteTarget) {
                     children.getElements().add(chromosome.clone());
                     break;
                 }
             }
         }
-        children.eval();
-        Collections.sort(children.elements, Collections.reverseOrder(new fitnessComparator()));
         return children;
-
-        /* OLD -> Provisório: pega os N melhores
-        this.eval();
-        Collections.sort(this.elements, Collections.reverseOrder(new fitnessComparator()));
-
-        GaPopulation children = this.clone();
-        children.elements = new ArrayList<>(children.elements.subList(0, Math.min(children.elements.size(), N)));
-
-        return children;
-        */
     }
 
     /**
