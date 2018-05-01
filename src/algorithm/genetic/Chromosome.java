@@ -14,7 +14,7 @@ abstract public class Chromosome implements Particle, Cloneable, Comparable<Chro
 
     protected ArrayList<Gene> genes = new ArrayList<>();
 
-    protected float fitness;
+    protected float fitness = 0;
 
     public Chromosome clone() throws CloneNotSupportedException {
         Chromosome clone = (Chromosome) super.clone();

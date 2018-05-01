@@ -57,10 +57,15 @@ public class GaPopulation extends Population<Chromosome>
      */
     public void evolve(GaPopulation children)
     {
+        // Salvar o tamanho N da população
         int originalSize = this.elements.size();
-
+        // Juntar os filhos
         this.elements.addAll(0, children.elements);
+        // Avaliar todos elementos
+        this.eval();
+        // Ordenar decrescente
         Collections.sort(this.elements, Collections.reverseOrder(new fitnessComparator()));
+        // Pegar os N melhores indivíduos para constituir a nova população
         this.elements = new ArrayList<>(this.elements.subList(0, originalSize));
     }
 

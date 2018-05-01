@@ -2,13 +2,20 @@ package problem.knapsack;
 
 import algorithm.genetic.Chromosome;
 import algorithm.genetic.Gene;
+import service.fitnessComparator;
+import service.valueComparator;
+import service.weightComparator;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.PriorityQueue;
 
 public class Bag extends Chromosome
 {
 
     private int capacity;
+
+    private int weight = 0;
 
     public Bag(int capacity) {
         this.capacity = capacity;
@@ -31,40 +38,61 @@ public class Bag extends Chromosome
                 this.fitness += item.getValue();
             }
         }
-        while(getCurrentBagWeight() > capacity) {
-            togglesMaxBagItem();
-            this.fitness/= 2;
+        if (calcWeight() > capacity) {
+            this.fitness /= 6;
         }
-        // Penaliza
-        //if(getCurrentBagWeight() > capacity)
-            //this.fitness = 0;
-        // corrige
 
         return this.fitness;
     }
 
-    private void togglesMaxBagItem() {
-        // Finds max and its index
-        int maxIndex = 0, maxWeight = 0, currentIndex = 0;
-        for(BagItem item : this.getItems()){
-            if(item.isActive()) {
-                if (item.getWeight() >= maxWeight) {
-                    maxWeight = item.getWeight();
-                    maxIndex = currentIndex;
-                }
-            }
-            currentIndex++;
+    public float weight() {
+        if (weight == 0) {
+            return calcWeight();
         }
-        getItems().get(maxIndex).toggle();
+        return weight;
     }
 
-    private int getCurrentBagWeight() {
-        int weight = 0;
-        for(BagItem item : this.getItems()){
-            if(item.isActive()) {
+    public float calcWeight() {
+        weight = 0;
+        for (BagItem item : this.getItems()) {
+            if (item.isActive()) {
                 weight += item.getWeight();
             }
         }
         return weight;
+    }
+
+    @Override
+    public void print() {
+        System.out.print(this.fitness + " - |");
+        for (Gene gene : this.genes) {
+            System.out.print(gene.isActive() ? "1|" : "0|");
+        }
+    }
+
+    public void fixBag() {
+        // Calcular o peso da mochila
+        float weight = calcWeight();
+        // Se ultrapassar o limite ...
+        if (weight > this.capacity) {
+            // Ordenar por valor os itens (crescente)
+            PriorityQueue<BagItem> rank = new PriorityQueue<>(new valueComparator());
+            rank.addAll(this.getItems());
+
+            // Retirar os itens menos valiosos até a mochila estar de acordo com sua capacidade
+            for (BagItem item : rank) {
+                // Item tem que estar na mochila
+                if (item.isActive()) {
+                    // Retirar o item
+                    item.drop();
+                    // Atualizar o peso
+                    weight -= item.getWeight();
+                }
+                // Peso já está correto?
+                if (weight <= this.capacity) {
+                    break;
+                }
+            }
+        }
     }
 }
