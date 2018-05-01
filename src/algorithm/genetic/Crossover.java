@@ -3,6 +3,8 @@ package algorithm.genetic;
 import algorithm.base.Operator;
 import controller.GaController;
 
+import java.util.Collections;
+
 public class Crossover implements Operator
 {
 
@@ -16,6 +18,7 @@ public class Crossover implements Operator
 
     @Override
     public void exec() {
+        Collections.shuffle(this.population.getElements(), GaController.getInstance().getRnd());
 
         for (int i = 0; i < this.population.getElements().size() - 1; i+=2) {
 

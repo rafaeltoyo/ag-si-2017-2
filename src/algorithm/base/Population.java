@@ -1,9 +1,6 @@
 package algorithm.base;
 
-import algorithm.genetic.Gene;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class Population<T> implements Cloneable
 {

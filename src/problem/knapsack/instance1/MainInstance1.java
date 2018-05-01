@@ -66,7 +66,7 @@ public class MainInstance1
         GaController.printBag(bag);
 
         GaPopulation pop = new GaPopulation();
-        for (int i = 0; i < 50; i++) {
+        for (int i = 0; i < 200; i++) {
             pop.getElements().add(bag.rndClone());
         }
 
