@@ -29,7 +29,7 @@ public class GeneticAlgorithm
         do {
 
             // Seleciona para reprodução
-            children = this.population.children(this.population.getElements().size() / 2);
+            children = this.population.children((int) (this.population.getElements().size() * 0.8));
 
             // Reprodução: Cruzamento (crossover simples) e mutação uniforme
             (new Crossover(children)).exec();
