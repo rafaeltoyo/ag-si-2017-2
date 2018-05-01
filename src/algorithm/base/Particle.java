@@ -5,4 +5,6 @@ public interface Particle
 
     float fitness();
 
+    void print();
+
 }

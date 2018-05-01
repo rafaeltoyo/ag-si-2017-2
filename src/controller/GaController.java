@@ -3,8 +3,12 @@ package controller;
 import problem.knapsack.Bag;
 import problem.knapsack.BagItem;
 
+import java.util.Random;
+
 public class GaController
 {
+
+    private final Random rnd = new Random();
 
     private static GaController ourInstance = new GaController();
 
@@ -14,6 +18,20 @@ public class GaController
 
     private GaController() {
 
+    }
+
+    public Random getRnd() {
+        return rnd;
+    }
+
+    // sorteia um numero no intervalo [inf, sup]
+    public int sortearItem(int inf, int sup) {
+        int n = sup - inf + 1;
+        if (n > 0) {
+            return rnd.nextInt(n) + inf;
+        } else {  // range not representable as int
+            return Math.abs(inf);
+        }
     }
 
     public static void printBag(Bag bag)

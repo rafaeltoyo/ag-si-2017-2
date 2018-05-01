@@ -1,7 +1,5 @@
 package algorithm.genetic;
 
-import algorithm.base.Population;
-
 public class GeneticAlgorithm
 {
 
@@ -22,39 +20,39 @@ public class GeneticAlgorithm
 
     public Chromosome run() throws CloneNotSupportedException
     {
-        GaPopulation population;
-
-        // Inicializa População
-        population = this.population.clone();
+        // População 'D'
+        GaPopulation children;
 
         // Calcula Fitness
-        population.evaluation();
+        this.population.eval();
 
         do {
 
             // Seleciona para reprodução
-            population.prepareToEvolve();
+            children = this.population.children(this.population.getElements().size() / 2);
 
             // Reprodução: Cruzamento (crossover simples) e mutação uniforme
-            population.crossover();
-            population.mutation();
+            (new Crossover(children)).exec();
 
             // Calcula Fitness
-            population.evaluation();
+            children.eval();
 
             // Nova População = melhores entre pais e filhos
-            population.evolve();
+            this.population.evolve(children);
 
             // Incrementa Geração
             this.generation++;
 
+            // PRINT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
             System.out.println("Generation: " + this.generation);
+            this.population.print();
+            System.out.println("");
 
             // Atingiu condição de Parada?
         } while (!this.stop());
 
         // Retorna melhor cromossomo
-        return population.getBest();
+        return this.population.getBest().clone();
     }
 
     /**
@@ -66,15 +64,9 @@ public class GeneticAlgorithm
         return (this.getMaxGen() >= 0 && this.getMaxGen() <= this.getGeneration());
     }
 
-    public int getGeneration() {
-        return generation;
-    }
+    public int getGeneration() { return generation; }
 
-    public int getMaxGen() {
-        return maxGen;
-    }
+    public int getMaxGen() { return maxGen; }
 
-    public void setMaxGen(int maxGen) {
-        this.maxGen = maxGen;
-    }
+    public void setMaxGen(int maxGen) { this.maxGen = maxGen; }
 }
