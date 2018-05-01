@@ -1,7 +1,5 @@
 package algorithm.genetic;
 
-import algorithm.base.Population;
-
 public class GeneticAlgorithm
 {
 
@@ -22,10 +20,10 @@ public class GeneticAlgorithm
 
     public Chromosome run() throws CloneNotSupportedException
     {
-        GaPopulation population;
-
         // Inicializa População
-        population = this.population.clone();
+        GaPopulation population = this.population.clone();
+
+        Crossover crossover = new Crossover(population);
 
         // Calcula Fitness
         population.evaluation();
@@ -36,8 +34,7 @@ public class GeneticAlgorithm
             population.prepareToEvolve();
 
             // Reprodução: Cruzamento (crossover simples) e mutação uniforme
-            population.crossover();
-            population.mutation();
+            crossover.exec();
 
             // Calcula Fitness
             population.evaluation();
@@ -66,15 +63,9 @@ public class GeneticAlgorithm
         return (this.getMaxGen() >= 0 && this.getMaxGen() <= this.getGeneration());
     }
 
-    public int getGeneration() {
-        return generation;
-    }
+    public int getGeneration() { return generation; }
 
-    public int getMaxGen() {
-        return maxGen;
-    }
+    public int getMaxGen() { return maxGen; }
 
-    public void setMaxGen(int maxGen) {
-        this.maxGen = maxGen;
-    }
+    public void setMaxGen(int maxGen) { this.maxGen = maxGen; }
 }

@@ -1,17 +1,13 @@
 package algorithm.genetic;
 
 import algorithm.base.Population;
-import service.fitnessComparator;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 
 public class GaPopulation extends Population<Chromosome>
 {
 
-    public static final float MUTATION_FACT = 0.05f;
+
 
     public GaPopulation() {
         super();
@@ -34,30 +30,6 @@ public class GaPopulation extends Population<Chromosome>
      *
      */
     public void prepareToEvolve()
-    {
-
-    }
-
-    /**
-     * todo Evoluir populacao
-     *
-     */
-    public void crossover()
-    {
-        // Ordenar
-        Collections.sort(this.elements);
-        // Eliminar os piores
-
-        // Reordenar
-
-        // Permutar genes em pares de cromossomos
-    }
-
-    /**
-     * todo Realizar a mutação na população
-     *
-     */
-    public void mutation()
     {
 
     }

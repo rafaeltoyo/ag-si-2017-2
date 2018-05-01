@@ -14,19 +14,30 @@ abstract public class Chromosome implements Particle, Cloneable, Comparable<Chro
 
     protected final List<Gene> genes = new ArrayList<>();
 
+    private float fitness;
+
     public Chromosome clone() throws CloneNotSupportedException { return (Chromosome) super.clone(); }
 
     protected void addGene(Gene gene) { this.genes.add(gene); }
 
-    @Override
-    public float fitness() {
-        float value = 0;
+    public List<Gene> getGenes() { return genes; }
+
+    public float calcFitness() {
+        this.fitness = 0;
         for (Gene gene : this.genes) {
             if (gene.isActive()) {
-                value += gene.getValue();
+                this.fitness += gene.getValue();
             }
         }
-        return value;
+        return this.fitness;
+    }
+
+    @Override
+    public float fitness() {
+        if (fitness == 0) {
+            return calcFitness();
+        }
+        return fitness;
     }
 
     @Override
