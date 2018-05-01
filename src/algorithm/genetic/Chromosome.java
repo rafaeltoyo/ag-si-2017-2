@@ -64,7 +64,7 @@ abstract public class Chromosome implements Particle, Cloneable, Comparable<Chro
 
     @Override
     public void print() {
-        System.out.print(this.calcFitness() + " - |");
+        System.out.print(this.fitness + " - |");
         for (Gene gene : this.genes) {
             System.out.print(gene.isActive() ? "1|" : "0|");
         }
