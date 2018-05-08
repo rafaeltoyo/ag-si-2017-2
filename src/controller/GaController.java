@@ -8,7 +8,10 @@ import java.util.Random;
 public class GaController
 {
 
-    private final Random rnd = new Random();
+    // 1 = Reparar // 2 = Penalizar //
+    public int mode = 1;
+
+    private Random rnd;
 
     private static GaController ourInstance = new GaController();
 
@@ -17,7 +20,7 @@ public class GaController
     }
 
     private GaController() {
-
+        rnd = new Random();
     }
 
     public Random getRnd() {
@@ -38,22 +41,37 @@ public class GaController
     {
         int id = 0;
 
-        System.out.println("------------------------------------------------------------");
-        System.out.println("| Item list:                                               |");
-        System.out.println("------------------------------------------------------------");
+
+        OutputController.getInstance().print("------------------------------------------------------------");
+        OutputController.getInstance().print("| Item list:                                               |");
+        OutputController.getInstance().print("------------------------------------------------------------");
+
+        //System.out.println("------------------------------------------------------------");
+        //System.out.println("| Item list:                                               |");
+        //System.out.println("------------------------------------------------------------");
 
         for (BagItem item : bag.getItems()) {
-            System.out.print("| id:  ");
-            System.out.print(++id);
-            System.out.print("\t | value: ");
-            System.out.print(item.getValue());
-            System.out.print("\t | weight: ");
-            System.out.print(item.getWeight());
-            System.out.print("\t | picked? ");
-            System.out.println(item.isActive() ? "Yes |" : " No |");
+            OutputController.getInstance().print("| id:  ", false);
+            OutputController.getInstance().print("" + (++id), false);
+            OutputController.getInstance().print("\t | value:  ", false);
+            OutputController.getInstance().print("" + item.getValue(), false);
+            OutputController.getInstance().print("\t | weight:  ", false);
+            OutputController.getInstance().print("" + item.getWeight(), false);
+            OutputController.getInstance().print("\t | picked?  ", false);
+            OutputController.getInstance().print(item.isActive() ? "Yes |" : " No |");
+
+            //System.out.print("| id:  ");
+            //System.out.print(++id);
+            //System.out.print("\t | value: ");
+            //System.out.print(item.getValue());
+            //System.out.print("\t | weight: ");
+            //System.out.print(item.getWeight());
+            //System.out.print("\t | picked? ");
+            //System.out.println(item.isActive() ? "Yes |" : " No |");
         }
 
-        System.out.println("------------------------------------------------------------");
+        OutputController.getInstance().print("------------------------------------------------------------");
+        //System.out.println("------------------------------------------------------------");
 
 
     }

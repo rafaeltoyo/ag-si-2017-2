@@ -27,6 +27,8 @@ public class Crossover implements Operator
 
             int limit = GaController.getInstance().sortearItem(1, father.getGenes().size());
 
+            boolean crossover = GaController.getInstance().getRnd().nextFloat() <= 0.8;
+
             for (int j = 0; j < father.getGenes().size(); j++) {
 
                 // Mutação do pai
@@ -40,12 +42,14 @@ public class Crossover implements Operator
                 }
 
                 // Limite do crossover
-                if (i >= limit) {
+                if (j >= limit) {
                     continue;
                 }
 
                 // Crossover
-                father.getGenes().get(j).swap(mother.getGenes().get(j));
+                if (crossover) {
+                    father.getGenes().get(j).swap(mother.getGenes().get(j));
+                }
             }
 
         }

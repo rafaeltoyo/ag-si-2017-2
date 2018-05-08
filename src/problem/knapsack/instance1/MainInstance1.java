@@ -1,18 +1,39 @@
 package problem.knapsack.instance1;
 
+import algorithm.genetic.Chromosome;
 import algorithm.genetic.GaPopulation;
 import algorithm.genetic.GeneticAlgorithm;
 import controller.GaController;
+import controller.OutputController;
 import problem.knapsack.Bag;
 import problem.knapsack.BagItem;
 
 public class MainInstance1
 {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) throws CloneNotSupportedException {
+        OutputController.getInstance().initFile("teste.txt");
+        kPopLoopSarado();
+        OutputController.getInstance().close();
+    }
+
+    public static void mainSucesso(String[] args) throws CloneNotSupportedException {
+        OutputController.getInstance().initFile("teste.txt");
+
+        int ct = 0;
+        while (++ct < 100) {
+            Chromosome chr = kPopLoopSarado();
+
+            // Print taxa sucesso
+            OutputController.getInstance().print(ct + "\t" + Float.toString(chr.fitness()));
+        }
+
+        OutputController.getInstance().close();
+    }
+
+    public static Chromosome kPopLoopSarado() throws CloneNotSupportedException {
+
+
         Bag bag = new Bag(113);
 
         // Items 1 to 14
@@ -63,7 +84,8 @@ public class MainInstance1
         bag.addItem(new BagItem(12, 17));   // 41
         bag.addItem(new BagItem(19, 39));   // 42
 
-        GaController.printBag(bag);
+        if (OutputController.getInstance().useControle())
+            GaController.printBag(bag);
 
         GaPopulation pop = new GaPopulation();
         for (int i = 0; i < 200; i++) {
@@ -73,12 +95,13 @@ public class MainInstance1
 
         System.out.println("Initial Population:");
         pop.eval();
-        pop.print();
+        if (OutputController.getInstance().useControle())
+            pop.print();
         System.out.println("");
 
         GeneticAlgorithm algo = new GeneticAlgorithm(pop);
         algo.setMaxGen(500);
-        algo.run();
+        return algo.run();
     }
 
 }
