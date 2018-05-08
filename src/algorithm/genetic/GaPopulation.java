@@ -2,6 +2,7 @@ package algorithm.genetic;
 
 import algorithm.base.Population;
 import controller.GaController;
+import controller.OutputController;
 import service.fitnessComparator;
 
 import java.util.ArrayList;
@@ -34,6 +35,10 @@ public class GaPopulation extends Population<Chromosome>
             total += chromosome.calcFitness();
         }
         return total;
+    }
+
+    public GaPopulation children() throws CloneNotSupportedException {
+        return children(this.elements.size());
     }
 
     /**
@@ -101,11 +106,14 @@ public class GaPopulation extends Population<Chromosome>
     public void print()
     {
         int ct = 0;
-        System.out.println("population[size = " + this.elements.size() + "] : ");
+        OutputController.getInstance().print("population[size = " + this.elements.size() + "] : ");
+        //System.out.println("population[size = " + this.elements.size() + "] : ");
         for (Chromosome chromosome : this.elements) {
-            System.out.print("Chromosome " + ++ct + ": \t");
+            OutputController.getInstance().print("Chromosome " + ++ct + ": \t", false);
+            //System.out.print("Chromosome " + ++ct + ": \t");
             chromosome.print();
-            System.out.println("");
+            OutputController.getInstance().print("");
+            //System.out.println("");
         }
     }
 

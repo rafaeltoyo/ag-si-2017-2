@@ -1,5 +1,7 @@
 package algorithm.genetic;
 
+import controller.OutputController;
+
 public class GeneticAlgorithm
 {
 
@@ -29,7 +31,7 @@ public class GeneticAlgorithm
         do {
 
             // Seleciona para reprodução
-            children = this.population.children((int) (this.population.getElements().size() * 0.8));
+            children = this.population.children();
 
             // Reprodução: Cruzamento (crossover simples) e mutação uniforme
             (new Crossover(children)).exec();
@@ -44,9 +46,14 @@ public class GeneticAlgorithm
             this.generation++;
 
             // PRINT @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-            System.out.println("Generation: " + this.generation);
-            this.population.print();
-            System.out.println("");
+
+            if (OutputController.getInstance().useControle()) {
+                System.out.println("Generation: " + this.generation);
+                this.population.print();
+                System.out.println("");
+            }
+
+            OutputController.getInstance().print(this.generation + "\t" + Float.toString(this.population.getBest().fitness()));
 
             // Atingiu condição de Parada?
         } while (!this.stop());

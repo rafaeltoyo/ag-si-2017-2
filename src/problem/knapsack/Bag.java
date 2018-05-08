@@ -2,10 +2,13 @@ package problem.knapsack;
 
 import algorithm.genetic.Chromosome;
 import algorithm.genetic.Gene;
+import controller.GaController;
+import controller.OutputController;
 import service.valueComparator;
 
 import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Random;
 
 public class Bag extends Chromosome
 {
@@ -42,7 +45,13 @@ public class Bag extends Chromosome
             }
         }
         if (calcWeight() > capacity) {
-            this.fitness /= 6;
+            if (GaController.getInstance().mode == 1) {
+                // Reparar
+                fixBag();
+            } else {
+                // Penalizar
+                this.fitness /= 6;
+            }
         }
 
         return this.fitness;
@@ -67,13 +76,39 @@ public class Bag extends Chromosome
 
     @Override
     public void print() {
-        System.out.print(this.fitness + ", " + this.weight + " - |");
+        OutputController.getInstance().print(this.fitness + ", " + this.weight + " - |", false);
+        //System.out.print(this.fitness + " - |");
         for (Gene gene : this.genes) {
-            System.out.print(gene.isActive() ? "1|" : "0|");
+            OutputController.getInstance().print(gene.isActive() ? "1|" : "0|", false);
+            //System.out.print(gene.isActive() ? "1|" : "0|");
         }
     }
 
     public void fixBag() {
+        fixBagRandom();
+    }
+
+    /**
+     * Retirar itens aleatórios
+     */
+    protected void fixBagRandom() {
+        // Calcular o peso da mochila
+        Random randomNumber = new Random();
+        int randomPosition = randomNumber.nextInt(this.getItems().size());
+        // Se ultrapassar o limite ...
+        while ( calcWeight() > this.capacity) {
+            // Ordenar por valor os itens (crescente)
+            while(!(this.getItems().get(randomPosition).isActive()))
+                randomPosition = randomNumber.nextInt(this.getItems().size());
+            this.getItems().get(randomPosition).drop();
+            this.fitness -= this.getItems().get(randomPosition).getValue();
+        }
+    }
+
+    /**
+     * Retirar os itens de menor valor - introduz vies
+     */
+    protected void fixBagLeastValuable() {
         // Calcular o peso da mochila
         float weight = calcWeight();
 
@@ -91,6 +126,7 @@ public class Bag extends Chromosome
                     item.drop();
                     // Atualizar o peso
                     weight -= item.getWeight();
+                    this.fitness -= item.getValue();
                 }
                 // Peso já está correto?
                 if (weight <= this.capacity) {

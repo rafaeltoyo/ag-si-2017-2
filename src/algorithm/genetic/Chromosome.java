@@ -1,6 +1,7 @@
 package algorithm.genetic;
 
 import algorithm.base.Particle;
+import controller.OutputController;
 
 import java.util.ArrayList;
 
@@ -63,9 +64,11 @@ abstract public class Chromosome implements Particle, Cloneable, Comparable<Chro
 
     @Override
     public void print() {
-        System.out.print(this.fitness + " - |");
+        OutputController.getInstance().print(this.fitness + " - |", false);
+        //System.out.print(this.fitness + " - |");
         for (Gene gene : this.genes) {
-            System.out.print(gene.isActive() ? "1|" : "0|");
+            OutputController.getInstance().print(gene.isActive() ? "1|" : "0|", false);
+            //System.out.print(gene.isActive() ? "1|" : "0|");
         }
     }
 }
